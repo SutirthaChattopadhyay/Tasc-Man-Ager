@@ -16,7 +16,16 @@ class TaskManager:
 
     def add_task(self):
         task = input("Enter Task: ")
-        self.tasks.append(task)
+        
+        new_id = len(self.tasks) + 1
+
+        new_task = {
+            "id": new_id,
+            "task": task,
+            "completed": False
+        }
+
+        self.tasks.append(new_task)
 
         print("Task Added Successfully")    
 
@@ -28,8 +37,13 @@ class TaskManager:
         
         print("\nTasks:")
 
-        for i, task in enumerate(self.tasks, start=1):
-            print(f"{i}.{task}")
+        for task in self.tasks:
+
+            status = "[X]" if task["completed"] else "[ ]"
+
+            print(
+                f'{task["id"]}.{status} {task["task"]}'
+                  )
 
 manager = TaskManager()
 
