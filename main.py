@@ -1,7 +1,32 @@
+import json
+
+
+
 class TaskManager:
+
+    def load_tasks(self):
+
+        try:
+
+            with open("tasks.json", "r") as file:
+
+                self.tasks = json.load(file)
+
+        except:
+            self.tasks = []        
+
+
+    
+    def save_tasks(self):
+
+        with open("tasks.json", "w") as file:
+
+            json.dump(self.tasks, file, indent=4)
 
     def __init__(self):
         self.tasks = []
+
+        self.load_tasks()
 
     def show_menu(self):
         print("\n====================================")
@@ -26,12 +51,13 @@ class TaskManager:
         }
 
         self.tasks.append(new_task)
+        self.save_tasks()
 
         print("Task Added Successfully")    
 
 
     def view_tasks(self):
-        if(self.tasks) == 0:
+        if not self.tasks:
             print("I Can't see anything ")
             return
         
@@ -42,7 +68,7 @@ class TaskManager:
             status = "[X]" if task["completed"] else "[ ]"
 
             print(
-                f'{task["id"]}.{status} {task["task"]}'
+                f'{task["id"]}. {status} {task["task"]}'
                   )
 
 manager = TaskManager()
